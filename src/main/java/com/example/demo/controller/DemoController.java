@@ -2,11 +2,12 @@ package com.example.demo.controller;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.domain.DemoDTO;
 import com.example.demo.service.DemoService;
@@ -16,10 +17,11 @@ import com.example.demo.service.DemoService;
 @RequestMapping("/demo")
 public class DemoController {
     
-    private static DemoService demoService;
+    @Autowired
+    private DemoService demoService;
 
     @GetMapping(value="/id={id}")
-    public String getDemoById(@RequestParam String id, Model model) {
+    public String getDemoById(@PathVariable(name = "id") String id, Model model) {
         DemoDTO demo;
         try {
             demo = demoService.getDemoById(UUID.fromString(id));
