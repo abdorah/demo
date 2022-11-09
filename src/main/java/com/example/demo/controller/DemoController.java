@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class DemoController {
     @Autowired
     private DemoService demoService;
 
+    @PreAuthorize("hasAuthority('typical authority')")
     @GetMapping(value="/id={id}")
     public String getDemoById(@PathVariable(name = "id") String id, Model model) {
         DemoDTO demo;

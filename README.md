@@ -28,3 +28,11 @@ The following guides illustrate how to use some features concretely:
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
 
+## Useful commands
+
+1. **Build the project with certain profile**
+    mvn clean package -Pprod
+    mvn clean package -Pdev
+2. **Run the project with certain profile**
+    mvn spring-boot:run -Pprod
+    mvn spring-boot: run -Pdev
