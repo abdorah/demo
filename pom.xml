@@ -55,11 +55,6 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
@@ -85,6 +80,38 @@
             <version>${mapstruct.version}</version>
         </dependency>
     </dependencies>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<includeSpringProfile>dev</includeSpringProfile>
+			</properties>
+			<dependencies>
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<scope>runtime</scope>
+			</dependency>
+		</dependencies>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<includeSpringProfile>prod</includeSpringProfile>
+			</properties>
+			<dependencies>
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<scope>runtime</scope>
+			</dependency>
+		</dependencies>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
