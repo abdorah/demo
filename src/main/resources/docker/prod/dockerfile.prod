@@ -1,0 +1,13 @@
+# BUILD STAGE
+FROM maven:3-eclipse-temurin-17-alpine AS builder
+COPY . build
+WORKDIR  /build/src/main/resources/
+RUN sed -i -e "s/\(spring.profiles.active=\).*/\1prod/" application.properties
+WORKDIR  /builder
+CMD   ["mvn", "install", "-DskipTests", "-Pprod"]
+
+# RUN STAGE
+FROM openjdk:17
+ADD target/demo-1.0.jar demo.jar
+ENTRYPOINT ["java", "-jar","demo.jar"]
+EXPOSE 8080

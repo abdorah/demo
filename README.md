@@ -36,3 +36,9 @@ The following guides illustrate how to use some features concretely:
 2. **Run the project with certain profile**
     mvn spring-boot:run -Pprod
     mvn spring-boot: run -Pdev
+3. **Build docker image**
+    docker build --pull --rm -f "src/main/resources/docker/prod/dockerfile.prod" -t demo:prod-1.0 "src/.." 
+    docker build --pull --rm -f "src/main/resources/docker/dev/dockerfile.dev" -t demo:dev-1.0 "src/.." 
+4. **Run docker composer**
+    docker compose -f "src/main/resources/docker/prod/prod.docker-compose.yml" up -d --build 
+    docker compose -f "src/main/resources/docker/dev/dev.docker-compose.yml" up -d --build 
