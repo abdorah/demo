@@ -1,0 +1,55 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "docker build --pull --rm -f \"src/main/resources/docker/prod/dockerfile.prod\" -t demo:prod-1.0 \"src/..\"",
+            "dependsOn": [
+                "start"
+            ],
+            "problemMatcher": ["$go"]
+        },
+        {
+            "label": "deploy",
+            "type": "shell",
+            "command": "docker compose -f \"src/main/resources/docker/prod/prod.docker-compose.yml\" up -d --build ",
+            "dependsOn": [
+                "build"
+            ],
+            "problemMatcher": ["$go"]
+        },
+        {
+            "label": "start",
+            "type": "shell",
+            "command": "echo ################################### Prod pipeline start ###################################",
+            "problemMatcher": ["$go"]
+        },
+        {
+            "label": "log",
+            "type": "shell",
+            "command": "docker logs --tail 1000 -f prod-API-1",
+            "dependsOn": [
+                "deploy"
+            ],
+            "problemMatcher": ["$go"]
+        },
+        {
+            "label": "launch",
+            "type": "shell",
+            "command": "echo ################################### Prod pipeline finish ###################################",
+            "dependsOn": [
+                "deploy"
+            ],
+            "problemMatcher": ["$go"]
+        },
+        {
+            "label": "stop",
+            "type": "shell",
+            "command": "docker compose -f '/workspaces/demo/src/main/resources/docker/prod/prod.docker-compose.yml'  -p 'prod' down",
+            "problemMatcher": []
+        }
+    ]
+}

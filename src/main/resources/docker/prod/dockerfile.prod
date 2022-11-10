@@ -3,11 +3,12 @@ FROM maven:3-eclipse-temurin-17-alpine AS builder
 COPY . build
 WORKDIR  /build/src/main/resources/
 RUN sed -i -e "s/\(spring.profiles.active=\).*/\1prod/" application.properties
-WORKDIR  /builder
-CMD   ["mvn", "install", "-DskipTests", "-Pprod"]
+RUN sed -i -e "s/\(spring.datasource.url=\).*/\1jdbc:postgresql:\\/\\/database:5432\\/demo/" application-prod.properties
+WORKDIR /build
+RUN mvn package -DskipTests -Pprod
 
 # RUN STAGE
 FROM openjdk:17
-ADD target/demo-1.0.jar demo.jar
+COPY --from=builder /build/target/demo-1.0.jar demo.jar
 ENTRYPOINT ["java", "-jar","demo.jar"]
 EXPOSE 8080

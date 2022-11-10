@@ -5,10 +5,10 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      PostgreSQL:
+      database:
         condition: service_healthy
 
-  PostgreSQL:
+  database:
     image: postgres
     ports:
       - "5432:5432"
