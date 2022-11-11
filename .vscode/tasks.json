@@ -4,13 +4,23 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "start",
+            "type": "shell",
+            "command": "echo ################################### Prod pipeline start ###################################",
+            "problemMatcher": [
+                "$go"
+            ]
+        },
+        {
             "label": "build",
             "type": "shell",
             "command": "docker build --pull --rm -f \"src/main/resources/docker/prod/dockerfile.prod\" -t demo:prod-1.0 \"src/..\"",
             "dependsOn": [
                 "start"
             ],
-            "problemMatcher": ["$go"]
+            "problemMatcher": [
+                "$go"
+            ]
         },
         {
             "label": "deploy",
@@ -19,13 +29,9 @@
             "dependsOn": [
                 "build"
             ],
-            "problemMatcher": ["$go"]
-        },
-        {
-            "label": "start",
-            "type": "shell",
-            "command": "echo ################################### Prod pipeline start ###################################",
-            "problemMatcher": ["$go"]
+            "problemMatcher": [
+                "$go"
+            ]
         },
         {
             "label": "log",
@@ -34,16 +40,31 @@
             "dependsOn": [
                 "deploy"
             ],
-            "problemMatcher": ["$go"]
+            "problemMatcher": [
+                "$go"
+            ]
         },
         {
-            "label": "launch",
+            "label": "launch:log",
+            "type": "shell",
+            "command": "echo ################################### Prod pipeline finish ###################################",
+            "dependsOn": [
+                "log"
+            ],
+            "problemMatcher": [
+                "$go"
+            ]
+        },
+        {
+            "label": "launch:silent",
             "type": "shell",
             "command": "echo ################################### Prod pipeline finish ###################################",
             "dependsOn": [
                 "deploy"
             ],
-            "problemMatcher": ["$go"]
+            "problemMatcher": [
+                "$go"
+            ]
         },
         {
             "label": "stop",
